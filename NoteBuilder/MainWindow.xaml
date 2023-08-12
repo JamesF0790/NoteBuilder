@@ -6,61 +6,76 @@
         xmlns:local="clr-namespace:NoteBuilder"
         mc:Ignorable="d"
         Title="Note Builder" Height="450" Width="800">
+
+    <Window.Resources>
+        <Storyboard x:Key="FlashSuccessAnimation">
+            <ColorAnimation
+            Storyboard.TargetName="CopyNoteButton"
+            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+            To="#00FF00"
+            Duration="0:0:0.25"
+            AutoReverse="True"/>
+        </Storyboard>
+
+        <Storyboard x:Key="FlashErrorAnimation">
+            <ColorAnimation
+            Storyboard.TargetName="CopyNoteButton"
+            Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)"
+            To="#FF0000"
+            Duration="0:0:0.25"
+            AutoReverse="True"/>
+        </Storyboard>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
             <!-- Top half -->
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
             <!-- Bottom half -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="563*"/>
-            <!-- Left half -->
-            <ColumnDefinition Width="237*"/>
-            <!-- Right half -->
+            <ColumnDefinition Width="8.5*"/>
+            <!-- Left side -->
+            <ColumnDefinition Width="1.5*"/>
+            <!-- Right side -->
         </Grid.ColumnDefinitions>
 
-        <!-- Top Half: Citation Level, Rule Broken, and Modify Components Button -->
-        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" Margin="10,10,10,10">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Citation level:" VerticalAlignment="Center"/>
-                <ComboBox Margin="10" Width="192"/>
+        <!-- Top Half: Dropdowns -->
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Greeting:" VerticalAlignment="Center" Width="50"/>
+                <ComboBox Margin="10" Width="300"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                <TextBlock Text="Rule broken:" VerticalAlignment="Center"/>
-                <ComboBox Margin="10" Width="199"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Rule:" VerticalAlignment="Center" Width="50"/>
+                <ComboBox Margin="10" Width="300"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Citation:" VerticalAlignment="Center" Width="50"/>
+                <ComboBox Margin="10" Width="300"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Signoff:" VerticalAlignment="Center" Width="50"/>
+                <ComboBox Margin="10" Width="300"/>
             </StackPanel>
         </StackPanel>
 
-        <Button x:Name="ModifyComponentsButton" Grid.Column="1" Content="Modify components" VerticalAlignment="Top" Margin="10,92,10,0"
-                Height="72" Click="ModifyComponentsButton_Click"/>
+        <!-- Bottom Half: Textbox -->
+        <TextBox x:Name="NoteTextBox" Grid.Row="1" Grid.Column="0" BorderThickness="0.5,0.5,0.5,0.5"/>
 
-        <!-- Bottom Half: Textbox, Generate Note, Copy Note -->
-        <Grid Grid.Row="1">
+        <!-- Right Side: Buttons -->
+        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <!-- Textbox takes up most of the space -->
-                <RowDefinition Height="Auto"/>
-                <!-- Generate Note button with fixed height -->
-                <RowDefinition Height="Auto"/>
-                <!-- Copy Note button with fixed height -->
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="8*"/>
-                <!-- Textbox takes up most of horizontal space -->
-                <ColumnDefinition Width="2*"/>
-                <!-- Buttons take up less horizontal space -->
-            </Grid.ColumnDefinitions>
 
-            <!-- Textbox -->
-            <TextBox Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" Grid.ColumnSpan="2"/>
-
-            <!-- Generate Note Button -->
-
-            <!-- Copy Note Button -->
+            <Button x:Name="ModifyComponentsButton" Content="Modify Components"  Click="ModifyComponentsButton_Click" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="0" BorderThickness="0.5,0.5,0.5,0.5" Margin="0.5,0,0.5,0"/>
+            <Button x:Name="GenerateNoteButton" Content="Generate Note"  Click="GenerateNoteButton_Click" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="1" BorderThickness="0.5,0.5,0.5,0.5" Margin="0.5,0,0.5,0"/>
+            <Button x:Name="CopyNoteButton" Content="Copy Note" Click="CopyNoteButton_Click" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="2" BorderThickness="0.5,0.5,0.5,0.5" Margin="0.5,0,0.5,0"/>
         </Grid>
-        <Button x:Name="GenerateNoteButton" Grid.Row="1" Content="Generate Note" Margin="10,10,10,130" Grid.Column="1" Click="GenerateNoteButton_Click"/>
-        <Button x:Name="CopyNoteButton" Grid.Row="1" Content="Copy Note" Margin="10,135,10,10" Grid.Column="1" Click="CopyNoteButton_Click"/>
-        <Button x:Name="ResetButton" Grid.Column="1" Content="Reset Note" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="77" Width="217" Click="ResetButton_Click"/>
     </Grid>
+
 </Window>
