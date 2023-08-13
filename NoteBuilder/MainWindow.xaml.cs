@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NoteBuilder.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,13 +22,27 @@ namespace NoteBuilder
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private DataManager _dataManager;
+
+        private string greeting = "";
+        private string rule = "";
+        private string citation = "";
+        private string signoff = "";
+
+
         public MainWindow()
         {
+
+        }
+        public MainWindow(DataManager dataManager) : this()
+        {
             InitializeComponent();
-            Closing += MainWindow_Closing;
+            DataContext = Application.Current;
+            _dataManager = dataManager;
         }
 
-        private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
+        protected override void OnClosed(EventArgs e)
         {
             foreach (Window window in Application.Current.Windows)
             {
@@ -36,6 +51,8 @@ namespace NoteBuilder
                     window.Close();
                 }
             }
+
+            base.OnClosed(e);
         }
 
         private void CopyNoteButton_Click(object sender, RoutedEventArgs e)
@@ -66,13 +83,53 @@ namespace NoteBuilder
 
         private void GenerateNoteButton_Click(object sender, RoutedEventArgs e)
         {
-
+            string generatedNote = $"{greeting}\n{rule}\n{citation}\n{signoff}";
+            NoteTextBox.Text = generatedNote;
         }
 
         private void ModifyComponentsButton_Click(object sender, RoutedEventArgs e)
         {
-            ComponentWindow componentWindow = new ComponentWindow();
-            componentWindow.Show();
+            if(ComponentWindow.IsAnyInstanceOpen)
+            {
+                ComponentWindow.FocusExistingWindow();
+            }
+            else
+            {
+                ComponentWindow componentWindow = new ComponentWindow(_dataManager);
+                componentWindow.Show();
+            }
+        }
+
+        private void GreetingsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(GreetingsComboBox.SelectedItem is NoteBlock selectedNoteBlock)
+            {
+                greeting = selectedNoteBlock.Content;
+            }
+        }
+
+        private void RulesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(RulesComboBox.SelectedItem is NoteBlock selectedRuleBlock)
+            {
+                rule = selectedRuleBlock.Content;
+            }
+        }
+
+        private void CitationsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(CitationsComboBox.SelectedItem is NoteBlock selectedCitationBlock)
+            {
+                citation = selectedCitationBlock.Content;
+            }    
+        }
+
+        private void SignoffsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(SignoffsComboBox.SelectedItem is NoteBlock selectedSignoffBlock)
+            {
+                signoff = selectedSignoffBlock.Content;
+            }
         }
     }
 }

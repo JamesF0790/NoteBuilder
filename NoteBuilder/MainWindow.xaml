@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NoteBuilder"
         mc:Ignorable="d"
-        Title="Note Builder" Height="450" Width="800">
+        d:DataContext="{d:DesignInstance Type=local:App, IsDesignTimeCreatable=True}"
+    Title="Note Builder" Height="450" Width="800">
 
     <Window.Resources>
         <Storyboard x:Key="FlashSuccessAnimation">
@@ -45,19 +46,43 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="Greeting:" VerticalAlignment="Center" Width="50"/>
-                <ComboBox Margin="10" Width="300"/>
+                <ComboBox x:Name="GreetingsComboBox" Margin="10" Width="300" ItemsSource="{Binding GreetingsList}" SelectionChanged="GreetingsComboBox_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="Rule:" VerticalAlignment="Center" Width="50"/>
-                <ComboBox Margin="10" Width="300"/>
+                <ComboBox x:Name="RulesComboBox" Width="300" ItemsSource="{Binding RulesList}" SelectionChanged="RulesComboBox_SelectionChanged" Margin="10">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="Citation:" VerticalAlignment="Center" Width="50"/>
-                <ComboBox Margin="10" Width="300"/>
+                <ComboBox x:Name="CitationsComboBox" Margin="10" Width="300" ItemsSource="{Binding CitationsList}" SelectionChanged="CitationsComboBox_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="Signoff:" VerticalAlignment="Center" Width="50"/>
-                <ComboBox Margin="10" Width="300"/>
+                <ComboBox x:Name="SignoffsComboBox" Margin="10" Width="300" ItemsSource="{Binding SignoffsList}" SelectionChanged="SignoffsComboBox_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </StackPanel>
         </StackPanel>
 

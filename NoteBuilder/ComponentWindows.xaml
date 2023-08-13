@@ -5,40 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NoteBuilder"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=local:App, IsDesignTimeCreatable=True}"
         Title="Components" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="17*"/>
-            <!-- Top two-thirds -->
             <RowDefinition Height="14*"/>
-            <!-- Bottom third -->
         </Grid.RowDefinitions>
 
         <!-- Top Two-Thirds: Dropdowns and Buttons -->
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10" HorizontalAlignment="Right">
                 <TextBlock Text="Greeting:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <ComboBox Width="300" Margin="0,0,10,0"/>
-                <Button x:Name="NewGreetingButton" Content="New" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <Button x:Name="LoadGreetingButton" Content="Load" VerticalAlignment="Center"/>
+                <ComboBox x:Name="GreetingsComboBox" Width="300" Margin="0,0,10,0" ItemsSource="{Binding GreetingsList}" SelectedIndex="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button x:Name="NewGreetingButton" Content="New" VerticalAlignment="Center" Click="NewGreetingButton_Click" />
+                <Button x:Name="LoadGreetingButton" Content="Load" VerticalAlignment="Center" Margin="10,0,10,0" Click="LoadGreetingButton_Click"/>
+                <Button x:Name="DeleteGreetingButton" Content="Delete" VerticalAlignment="Center" Click="DeleteGreetingButton_Click"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10" HorizontalAlignment="Right">
                 <TextBlock Text="Rule:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <ComboBox Width="300" Margin="0,0,10,0"/>
-                <Button x:Name="NewRuleButton" Content="New" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <Button x:Name="LoadRuleButton" Content="Load" VerticalAlignment="Center"/>
+                <ComboBox x:Name="RulesComboBox" Width="300" Margin="0,0,10,0" ItemsSource="{Binding RulesList}" SelectedIndex="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button x:Name="NewRuleButton" Content="New" VerticalAlignment="Center" Click="NewRuleButton_Click"/>
+                <Button x:Name="LoadRuleButton" Content="Load" VerticalAlignment="Center" Margin="10,0,10,0" Click="LoadRuleButton_Click"/>
+                <Button x:Name="DeleteRuleButton" Content="Delete" VerticalAlignment="Center" Click="DeleteRuleButton_Click"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10" HorizontalAlignment="Right">
                 <TextBlock Text="Citation:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <ComboBox Width="300" Margin="0,0,10,0"/>
-                <Button x:Name="NewCitationButton" Content="New" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <Button x:Name="LoadCitationButton" Content="Load" VerticalAlignment="Center"/>
+                <ComboBox x:Name="CitationsComboBox" Width="300" Margin="0,0,10,0" ItemsSource="{Binding CitationsList}" SelectedIndex="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button x:Name="NewCitationButton" Content="New" VerticalAlignment="Center" Click="NewCitationButton_Click"/>
+                <Button x:Name="LoadCitationButton" Content="Load" VerticalAlignment="Center" Margin="10,0,10,0" Click="LoadCitationButton_Click"/>
+                <Button x:Name="DeleteCitationButton" Content="Delete" VerticalAlignment="Center" Click="DeleteCitationButton_Click"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBlock Text="Signoff:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <ComboBox Width="300" Margin="0,0,10,0"/>
-                <Button x:Name="NewSignoffButton" Content="New" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                <Button x:Name="LoadSignoffButton" Content="Load" VerticalAlignment="Center"/>
+                <ComboBox x:Name="SignoffsComboBox" Width="300" Margin="0,0,10,0" ItemsSource="{Binding SignoffsList}" SelectedIndex="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button x:Name="NewSignoffButton" Content="New" VerticalAlignment="Center" Click="NewSignoffButton_Click"/>
+                <Button x:Name="LoadSignoffButton" Content="Load" VerticalAlignment="Center" Margin="10,0,10,0" Click="LoadSignoffButton_Click"/>
+                <Button x:Name="DeleteSignoffButton" Content="Delete" VerticalAlignment="Center" Click="DeleteSignoffButton_Click"/>
             </StackPanel>
         </StackPanel>
 
@@ -46,16 +73,14 @@
         <Grid Grid.Row="1" Margin="0,3,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="347*"/>
-                <!-- Textbox takes up 80% width -->
                 <ColumnDefinition Width="53*"/>
-                <!-- Button takes up remaining width -->
             </Grid.ColumnDefinitions>
 
             <!-- Textbox -->
-            <TextBox Grid.Column="0" Margin="5"/>
+            <TextBox x:Name="noteBlockTextBox" Grid.Column="0" Margin="5"/>
 
             <!-- Save Button -->
-            <Button Grid.Column="1" Content="Save" Margin="5"/>
+            <Button x:Name="SaveButton" Grid.Column="1" Content="Save" Margin="5" Click="SaveButton_Click"/>
         </Grid>
     </Grid>
 </Window>

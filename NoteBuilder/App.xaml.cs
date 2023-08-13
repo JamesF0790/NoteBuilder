@@ -1,10 +1,7 @@
-﻿using System;
+﻿using NoteBuilder.Model;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace NoteBuilder
@@ -14,27 +11,27 @@ namespace NoteBuilder
     /// </summary>
     public partial class App : Application
     {
+
+        private DataManager _dataManager;
+
+        public List<NoteBlock> GreetingsList { get; private set; }
+        public List<NoteBlock> RulesList { get; private set; }
+        public List<NoteBlock> CitationsList { get; private set; }
+        public List<NoteBlock> SignoffsList { get; private set; }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            string dataFolderPath = "Data";
+            _dataManager = new DataManager();
+            GreetingsList = _dataManager.GreetingsList;
+            RulesList = _dataManager.RulesList;
+            CitationsList = _dataManager.CitationsList;
+            SignoffsList = _dataManager.SignoffsList;
 
-            CreateMissingJsonFile(dataFolderPath, "Greetings.json");
-            CreateMissingJsonFile(dataFolderPath, "Rules.json");
-            CreateMissingJsonFile(dataFolderPath, "Citations.json");
-            CreateMissingJsonFile(dataFolderPath, "Signoffs.json");
-        }
+            MainWindow mainWindow = new MainWindow(_dataManager);
+            mainWindow.Show();
 
-        private void CreateMissingJsonFile(string folderPath, string fileName)
-        {
-            string filePath = Path.Combine(folderPath, fileName);
-
-            if(!File.Exists(filePath))
-            {
-                Directory.CreateDirectory(folderPath);
-                File.WriteAllText(filePath, "[]");
-            }
         }
     }
 }
