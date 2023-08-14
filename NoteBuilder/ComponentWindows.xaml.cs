@@ -98,7 +98,7 @@ namespace NoteBuilder
         private void LoadGreetingButton_Click(object sender, RoutedEventArgs e)
         {
             noteBlock = GreetingsComboBox.SelectedItem as NoteBlock;
-            if (noteBlock.Placeholder = false)
+            if (noteBlock.Placeholder == false)
             {
                 noteBlockTextBox.Text = noteBlock!.Content;
                 type = "Greetings";
@@ -114,7 +114,7 @@ namespace NoteBuilder
         private void LoadRuleButton_Click(object sender, RoutedEventArgs e)
         {
             noteBlock = RulesComboBox.SelectedItem as NoteBlock;
-            if (noteBlock.Placeholder = true)
+            if (noteBlock.Placeholder == true)
             {
                 noteBlockTextBox.Text = noteBlock!.Content;
                 type = "Rules";
@@ -130,7 +130,7 @@ namespace NoteBuilder
         private void LoadCitationButton_Click(object sender, RoutedEventArgs e)
         {
             noteBlock = CitationsComboBox.SelectedItem as NoteBlock;
-            if (noteBlock.Placeholder = true)
+            if (noteBlock.Placeholder == true)
             {
                 noteBlockTextBox.Text = noteBlock!.Content;
                 type = "Citations";
@@ -145,7 +145,7 @@ namespace NoteBuilder
         private void LoadSignoffButton_Click(object sender, RoutedEventArgs e)
         {
             noteBlock = SignoffsComboBox.SelectedItem as NoteBlock;
-            if (noteBlock.Placeholder = true)
+            if (noteBlock.Placeholder == true)
             {
                 noteBlockTextBox.Text = noteBlock!.Content;
                 type = "Signoffs";
