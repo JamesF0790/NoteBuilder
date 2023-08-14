@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) 2023 James Frost
+
+// Licensed under the MIT License.
+// See the LICENSE.txt file in the project root for the full license text.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +19,7 @@ using System.Windows.Shapes;
 namespace NoteBuilder
 {
     /// <summary>
-    /// Interaction logic for NewNoteBlockDialogue.xaml
+    /// Pop up dialog that lets the user enter a title for a text block.
     /// </summary>
     public partial class NewNoteBlockDialog : Window
     {

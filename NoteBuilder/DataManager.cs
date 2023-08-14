@@ -1,4 +1,9 @@
-﻿using NoteBuilder.Model;
+﻿// Copyright (c) 2023 James Frost
+
+// Licensed under the MIT License.
+// See the LICENSE.txt file in the project root for the full license text.
+
+using NoteBuilder.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;

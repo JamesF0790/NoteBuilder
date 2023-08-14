@@ -3,10 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:NoteBuilder">
     <Application.Resources>
-        <ResourceDictionary>
-            <Style TargetType="ComboBox">
-                <Setter Property="SelectedIndex" Value="0"/>
-            </Style>
-        </ResourceDictionary>
+
     </Application.Resources>
 </Application>

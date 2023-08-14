@@ -1,4 +1,8 @@
-﻿using NoteBuilder.Model;
+﻿// Copyright (c) 2023 James Frost
+
+// Licensed under the MIT License.
+// See the LICENSE.txt file in the project root for the full license text.
+using NoteBuilder.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,7 +25,7 @@ using System.Xml;
 namespace NoteBuilder
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// The Component window that edits the text blocks, creates new ones and deletes them.
     /// </summary>
     public partial class ComponentWindow : Window
     {

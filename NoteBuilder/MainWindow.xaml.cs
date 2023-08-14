@@ -1,4 +1,9 @@
-﻿using NoteBuilder.Model;
+﻿// Copyright (c) 2023 James Frost
+
+// Licensed under the MIT License.
+// See the LICENSE.txt file in the project root for the full license text.
+
+using NoteBuilder.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +23,7 @@ using System.Windows.Shapes;
 namespace NoteBuilder
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// The main window where the user selects the text blocks they want to use and generates the note.
     /// </summary>
     public partial class MainWindow : Window
     {

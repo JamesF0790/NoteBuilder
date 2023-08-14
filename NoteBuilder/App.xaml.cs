@@ -1,4 +1,9 @@
-﻿using NoteBuilder.Model;
+﻿// Copyright (c) 2023 James Frost
+
+// Licensed under the MIT License.
+// See the LICENSE file in the project root for the full license text.
+
+using NoteBuilder.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +12,7 @@ using System.Windows;
 namespace NoteBuilder
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// The main app class. It hosts the datamanager that contains the app's data.
     /// </summary>
     public partial class App : Application
     {
