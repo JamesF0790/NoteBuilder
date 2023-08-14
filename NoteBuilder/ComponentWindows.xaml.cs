@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Printing;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.Pkcs;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace NoteBuilder
 {
@@ -30,14 +32,14 @@ namespace NoteBuilder
         public static bool IsAnyInstanceOpen => openWindows.Count > 0;
 
         private string type = "";
+        private string action = "";
 
         private NoteBlock? noteBlock;
-        private bool newBlock = false;
         public ComponentWindow(DataManager dataManager)
         {
             InitializeComponent();
-            DataContext = Application.Current;
             _dataManager = dataManager;
+            DataContext = _dataManager;
 
             openWindows.Add(this);
         }
@@ -53,7 +55,7 @@ namespace NoteBuilder
             openWindows.Remove(this);
             base.OnClosed(e);
         }
-        #region New NoteBlock
+        #region New Block
         private void NewNoteBlock()
         {
             NewNoteBlockDialog dialog = new NewNoteBlockDialog();
@@ -62,103 +64,181 @@ namespace NoteBuilder
             {
                 string newTitle = dialog.newTitle;
                 noteBlock = new NoteBlock(newTitle, "", Guid.NewGuid(), false);
-                newBlock = true;
+                action = "New";
 
             }
         }
         
         private void NewGreetingButton_Click(object sender, RoutedEventArgs e)
         {
-            type = "Greeting";
+            type = "Greetings";
             NewNoteBlock();
         }
 
         private void NewRuleButton_Click(object sender, RoutedEventArgs e)
         {
-            type = "Rule";
+            type = "Rules";
             NewNoteBlock();
         }
 
         private void NewCitationButton_Click(object sender, RoutedEventArgs e)
         {
-            type = "Citation";
+            type = "Citations";
             NewNoteBlock();
         }
 
         private void NewSignoffButton_Click(object sender, RoutedEventArgs e)
         {
-            type = "Signoff";
+            type = "Signoffs";
             NewNoteBlock();
         }
         #endregion
 
-        #region Load Logic
+        #region Load Block
         private void LoadGreetingButton_Click(object sender, RoutedEventArgs e)
         {
             noteBlock = GreetingsComboBox.SelectedItem as NoteBlock;
-            noteBlockTextBox.Text = noteBlock!.Content;
-            type = "Greeting";
+            if (noteBlock.Placeholder = false)
+            {
+                noteBlockTextBox.Text = noteBlock!.Content;
+                type = "Greetings";
+                action = "Load";
+            }
+            else
+            {
+                noteBlock = null;
+            }
+            
         }
 
         private void LoadRuleButton_Click(object sender, RoutedEventArgs e)
         {
             noteBlock = RulesComboBox.SelectedItem as NoteBlock;
-            noteBlockTextBox.Text = noteBlock!.Content;
-            type = "Rule";
+            if (noteBlock.Placeholder = true)
+            {
+                noteBlockTextBox.Text = noteBlock!.Content;
+                type = "Rules";
+                action = "Load";
+            }
+            else
+            {
+                noteBlock = null;
+            }
+            
         }
 
         private void LoadCitationButton_Click(object sender, RoutedEventArgs e)
         {
             noteBlock = CitationsComboBox.SelectedItem as NoteBlock;
-            noteBlockTextBox.Text = noteBlock!.Content;
-            type = "Citation";
+            if (noteBlock.Placeholder = true)
+            {
+                noteBlockTextBox.Text = noteBlock!.Content;
+                type = "Citations";
+                action = "Load";
+            }
+            else
+            {
+                noteBlock = null;
+            }
         }
 
         private void LoadSignoffButton_Click(object sender, RoutedEventArgs e)
         {
             noteBlock = SignoffsComboBox.SelectedItem as NoteBlock;
-            noteBlockTextBox.Text = noteBlock!.Content;
-            type = "Signoff";
+            if (noteBlock.Placeholder = true)
+            {
+                noteBlockTextBox.Text = noteBlock!.Content;
+                type = "Signoffs";
+                action = "Load";
+            }
+            else
+            {
+                noteBlock= null;
+            }
         }
         #endregion
 
         #region Delete Block
+        private void DeleteBlock(NoteBlock block)
+        {
+            MessageBoxResult result = MessageBox.Show($"Are you sure you want to delete {block.Title}?", "Confirm Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                _dataManager.DeleteBlock(type, block.Id);
+            }
+            type = "";
+            noteBlock = null;
+        }
         private void DeleteGreetingButton_Click(object sender, RoutedEventArgs e)
         {
-
+            noteBlock = GreetingsComboBox.SelectedItem as NoteBlock;
+            type = "Greetings";
+            DeleteBlock(noteBlock);
         }
 
         private void DeleteRuleButton_Click(object sender, RoutedEventArgs e)
         {
-
+            noteBlock = RulesComboBox.SelectedItem as NoteBlock;
+            type = "Rules";
+            DeleteBlock(noteBlock);
         }
 
         private void DeleteCitationButton_Click(object sender, RoutedEventArgs e)
         {
-
+            noteBlock = CitationsComboBox.SelectedItem as NoteBlock;
+            type = "Citations";
+            DeleteBlock(noteBlock);
         }
 
         private void DeleteSignoffButton_Click(object sender, RoutedEventArgs e)
         {
-
+            noteBlock = SignoffsComboBox.SelectedItem as NoteBlock;
+            type = "Signoffs";
+            DeleteBlock(noteBlock);
         }
         #endregion
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            switch (type)
+            if (action != "" && type != "")
             {
-                case "Greeting":
-                    if(noteBlock != null && noteBlockTextBox.Text != "")
-                    {
+                switch (action)
+                {
+                    case "New":
                         noteBlock.Content = noteBlockTextBox.Text;
-                    }
-                    break;
-                default:
-                    break;
+                        _dataManager.AddBlock(type, noteBlock);
+                        break;
+                    case "Load":
+                        NewNoteBlockDialog dialog = new NewNoteBlockDialog(noteBlock.Title);
+                        bool? result = dialog.ShowDialog();
+                        if (result == true)
+                        {
+                            string newTitle = dialog.newTitle;
+                            noteBlock.Title = newTitle;
+                        }
+                        noteBlock.Content = noteBlockTextBox.Text;
+                        _dataManager.EditBlock(type, noteBlock);
+                        break;
+                    default:
+                        break;
+                }
+                action = "";
+                type = "";
+                noteBlock = null;
+                noteBlockTextBox.Text = string.Empty;
+                ResetComboBoxes();
             }
         }
-        
+
+        private void ResetComboBoxes()
+        {
+            DataContext = null;
+            DataContext = _dataManager;
+            GreetingsComboBox.SelectedIndex = 0;
+            RulesComboBox.SelectedIndex = 0;
+            CitationsComboBox.SelectedIndex = 0;
+            SignoffsComboBox.SelectedIndex = 0;
+            ResetComboBoxesRequested?.Invoke(this, EventArgs.Empty);
+        }
+        public event EventHandler ResetComboBoxesRequested;
     }
-
-
 }

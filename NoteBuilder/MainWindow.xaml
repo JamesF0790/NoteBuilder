@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NoteBuilder"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=local:App, IsDesignTimeCreatable=True}"
     Title="Note Builder" Height="450" Width="800">
 
     <Window.Resources>
@@ -44,19 +43,21 @@
 
         <!-- Top Half: Dropdowns -->
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <TextBlock Text="Greeting:" VerticalAlignment="Center" Width="50"/>
-                <ComboBox x:Name="GreetingsComboBox" Margin="10" Width="300" ItemsSource="{Binding GreetingsList}" SelectionChanged="GreetingsComboBox_SelectionChanged">
+                <ComboBox x:Name="GreetingsComboBox" Margin="10" Width="300" ItemsSource="{Binding GreetingsList}" SelectionChanged="GreetingsComboBox_SelectionChanged" SelectedIndex="0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Title}"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+                <CheckBox x:Name="RandomGreetingCheckBox" VerticalAlignment="Center" Margin="10" Checked="RandomGreetingCheckBox_Checked" Unchecked="RandomGreetingCheckBox_Unchecked"/>
+                <TextBlock VerticalAlignment="Center" Text="Random"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <TextBlock Text="Rule:" VerticalAlignment="Center" Width="50"/>
-                <ComboBox x:Name="RulesComboBox" Width="300" ItemsSource="{Binding RulesList}" SelectionChanged="RulesComboBox_SelectionChanged" Margin="10">
+                <ComboBox x:Name="RulesComboBox" Width="300" ItemsSource="{Binding RulesList}" SelectionChanged="RulesComboBox_SelectionChanged" Margin="10" SelectedIndex="0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Title}"/>
@@ -64,9 +65,9 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <TextBlock Text="Citation:" VerticalAlignment="Center" Width="50"/>
-                <ComboBox x:Name="CitationsComboBox" Margin="10" Width="300" ItemsSource="{Binding CitationsList}" SelectionChanged="CitationsComboBox_SelectionChanged">
+                <ComboBox x:Name="CitationsComboBox" Margin="10" Width="300" ItemsSource="{Binding CitationsList}" SelectionChanged="CitationsComboBox_SelectionChanged" SelectedIndex="0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Title}"/>
@@ -74,15 +75,17 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <TextBlock Text="Signoff:" VerticalAlignment="Center" Width="50"/>
-                <ComboBox x:Name="SignoffsComboBox" Margin="10" Width="300" ItemsSource="{Binding SignoffsList}" SelectionChanged="SignoffsComboBox_SelectionChanged">
+                <ComboBox x:Name="SignoffsComboBox" Margin="10" Width="300" ItemsSource="{Binding SignoffsList}" SelectionChanged="SignoffsComboBox_SelectionChanged" SelectedIndex="0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Title}"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+                <CheckBox x:Name="RandomSignoffButton" VerticalAlignment="Center" Margin="10" Checked="RandomSignoffButton_Checked" Unchecked="RandomSignoffButton_Unchecked"/>
+                <TextBlock VerticalAlignment="Center" Text="Random"/>
             </StackPanel>
         </StackPanel>
 

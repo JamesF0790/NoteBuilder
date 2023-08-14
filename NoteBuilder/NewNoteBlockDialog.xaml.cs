@@ -20,9 +20,10 @@ namespace NoteBuilder
     public partial class NewNoteBlockDialog : Window
     {
         public string newTitle { get; private set; }
-        public NewNoteBlockDialog()
+        public NewNoteBlockDialog(string initialTitle = "")
         {
             InitializeComponent();
+            TitleTextBox.Text = initialTitle;
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)

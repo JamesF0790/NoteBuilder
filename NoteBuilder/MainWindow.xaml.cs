@@ -38,8 +38,8 @@ namespace NoteBuilder
         public MainWindow(DataManager dataManager) : this()
         {
             InitializeComponent();
-            DataContext = Application.Current;
             _dataManager = dataManager;
+            DataContext = _dataManager;  
         }
 
         protected override void OnClosed(EventArgs e)
@@ -83,10 +83,25 @@ namespace NoteBuilder
 
         private void GenerateNoteButton_Click(object sender, RoutedEventArgs e)
         {
+            if (RandomGreetingCheckBox.IsChecked == true)
+            {
+                Random random = new Random();
+                int randomIndex = random.Next(_dataManager.GreetingsList.Count);
+                greeting = _dataManager.GreetingsList[randomIndex].Content;
+            }
+            if (RandomSignoffButton.IsChecked == true)
+            {
+                Random random = new Random();
+                int randomIndex = random.Next(_dataManager.SignoffsList.Count);
+                signoff = _dataManager.SignoffsList[randomIndex].Content;
+            }
             string generatedNote = $"{greeting}\n{rule}\n{citation}\n{signoff}";
             NoteTextBox.Text = generatedNote;
         }
-
+        private void ComponentWindow_ResetComboBoxesRequested(object sender, EventArgs e)
+        {
+            ResetComboBoxes();
+        }
         private void ModifyComponentsButton_Click(object sender, RoutedEventArgs e)
         {
             if(ComponentWindow.IsAnyInstanceOpen)
@@ -96,6 +111,7 @@ namespace NoteBuilder
             else
             {
                 ComponentWindow componentWindow = new ComponentWindow(_dataManager);
+                componentWindow.ResetComboBoxesRequested += ComponentWindow_ResetComboBoxesRequested;
                 componentWindow.Show();
             }
         }
@@ -130,6 +146,37 @@ namespace NoteBuilder
             {
                 signoff = selectedSignoffBlock.Content;
             }
+        }
+        public void ResetComboBoxes()
+        {
+            DataContext = null;
+            DataContext = _dataManager;
+            GreetingsComboBox.SelectedIndex = 0;
+            RulesComboBox.SelectedIndex = 0;
+            CitationsComboBox.SelectedIndex = 0;
+            SignoffsComboBox.SelectedIndex = 0;
+        }
+
+        private void RandomGreetingCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            GreetingsComboBox.IsEnabled = false;
+        }
+        private void RandomGreetingCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            GreetingsComboBox.IsEnabled=true;
+            NoteBlock tempBlock = GreetingsComboBox.SelectedItem as NoteBlock;
+            greeting = tempBlock.Content;
+        }
+        private void RandomSignoffButton_Checked(object sender, RoutedEventArgs e)
+        {
+            SignoffsComboBox.IsEnabled = false;
+        }
+        private void RandomSignoffButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SignoffsComboBox.IsEnabled=true;
+            NoteBlock tempBlock = SignoffsComboBox.SelectedItem as NoteBlock;
+            signoff = tempBlock.Content;
+
         }
     }
 }
