@@ -90,7 +90,7 @@
         </StackPanel>
 
         <!-- Bottom Half: Textbox -->
-        <TextBox x:Name="NoteTextBox" Grid.Row="1" Grid.Column="0" BorderThickness="0.5,0.5,0.5,0.5" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" />
+        <TextBox x:Name="NoteTextBox" Grid.Row="1" Grid.Column="0" BorderThickness="0.5,0.5,0.5,0.5" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
 
         <!-- Right Side: Buttons -->
         <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="1">

@@ -36,7 +36,9 @@ namespace NoteBuilder
         private string signoff = "";
 
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public MainWindow()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
 
         }
@@ -116,7 +118,7 @@ namespace NoteBuilder
             else
             {
                 ComponentWindow componentWindow = new ComponentWindow(_dataManager);
-                componentWindow.ResetComboBoxesRequested += ComponentWindow_ResetComboBoxesRequested;
+                componentWindow.ResetComboBoxesRequested += ComponentWindow_ResetComboBoxesRequested!;
                 componentWindow.Show();
             }
         }
@@ -169,8 +171,10 @@ namespace NoteBuilder
         private void RandomGreetingCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             GreetingsComboBox.IsEnabled=true;
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             NoteBlock tempBlock = GreetingsComboBox.SelectedItem as NoteBlock;
-            greeting = tempBlock.Content;
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+            greeting = tempBlock!.Content;
         }
         private void RandomSignoffButton_Checked(object sender, RoutedEventArgs e)
         {
@@ -179,8 +183,10 @@ namespace NoteBuilder
         private void RandomSignoffButton_Unchecked(object sender, RoutedEventArgs e)
         {
             SignoffsComboBox.IsEnabled=true;
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             NoteBlock tempBlock = SignoffsComboBox.SelectedItem as NoteBlock;
-            signoff = tempBlock.Content;
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+            signoff = tempBlock!.Content;
 
         }
     }

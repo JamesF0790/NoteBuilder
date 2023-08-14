@@ -39,7 +39,9 @@ namespace NoteBuilder
         private string action = "";
 
         private NoteBlock? noteBlock;
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public ComponentWindow(DataManager dataManager)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             InitializeComponent();
             _dataManager = dataManager;
@@ -102,7 +104,7 @@ namespace NoteBuilder
         private void LoadGreetingButton_Click(object sender, RoutedEventArgs e)
         {
             noteBlock = GreetingsComboBox.SelectedItem as NoteBlock;
-            if (noteBlock.Placeholder == false)
+            if (noteBlock!.Placeholder == false)
             {
                 noteBlockTextBox.Text = noteBlock!.Content;
                 type = "Greetings";
@@ -118,7 +120,7 @@ namespace NoteBuilder
         private void LoadRuleButton_Click(object sender, RoutedEventArgs e)
         {
             noteBlock = RulesComboBox.SelectedItem as NoteBlock;
-            if (noteBlock.Placeholder == true)
+            if (noteBlock!.Placeholder == false)
             {
                 noteBlockTextBox.Text = noteBlock!.Content;
                 type = "Rules";
@@ -134,7 +136,7 @@ namespace NoteBuilder
         private void LoadCitationButton_Click(object sender, RoutedEventArgs e)
         {
             noteBlock = CitationsComboBox.SelectedItem as NoteBlock;
-            if (noteBlock.Placeholder == true)
+            if (noteBlock!.Placeholder == false)
             {
                 noteBlockTextBox.Text = noteBlock!.Content;
                 type = "Citations";
@@ -149,7 +151,7 @@ namespace NoteBuilder
         private void LoadSignoffButton_Click(object sender, RoutedEventArgs e)
         {
             noteBlock = SignoffsComboBox.SelectedItem as NoteBlock;
-            if (noteBlock.Placeholder == true)
+            if (noteBlock!.Placeholder == false)
             {
                 noteBlockTextBox.Text = noteBlock!.Content;
                 type = "Signoffs";
@@ -171,34 +173,36 @@ namespace NoteBuilder
                 _dataManager.DeleteBlock(type, block.Id);
             }
             type = "";
+            noteBlockTextBox.Text = string.Empty;
             noteBlock = null;
+            ResetComboBoxes();
         }
         private void DeleteGreetingButton_Click(object sender, RoutedEventArgs e)
         {
             noteBlock = GreetingsComboBox.SelectedItem as NoteBlock;
             type = "Greetings";
-            DeleteBlock(noteBlock);
+            DeleteBlock(noteBlock!);
         }
 
         private void DeleteRuleButton_Click(object sender, RoutedEventArgs e)
         {
             noteBlock = RulesComboBox.SelectedItem as NoteBlock;
             type = "Rules";
-            DeleteBlock(noteBlock);
+            DeleteBlock(noteBlock!);
         }
 
         private void DeleteCitationButton_Click(object sender, RoutedEventArgs e)
         {
             noteBlock = CitationsComboBox.SelectedItem as NoteBlock;
             type = "Citations";
-            DeleteBlock(noteBlock);
+            DeleteBlock(noteBlock!);
         }
 
         private void DeleteSignoffButton_Click(object sender, RoutedEventArgs e)
         {
             noteBlock = SignoffsComboBox.SelectedItem as NoteBlock;
             type = "Signoffs";
-            DeleteBlock(noteBlock);
+            DeleteBlock(noteBlock!);
         }
         #endregion
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -208,11 +212,11 @@ namespace NoteBuilder
                 switch (action)
                 {
                     case "New":
-                        noteBlock.Content = noteBlockTextBox.Text;
+                        noteBlock!.Content = noteBlockTextBox.Text;
                         _dataManager.AddBlock(type, noteBlock);
                         break;
                     case "Load":
-                        NewNoteBlockDialog dialog = new NewNoteBlockDialog(noteBlock.Title);
+                        NewNoteBlockDialog dialog = new NewNoteBlockDialog(noteBlock!.Title);
                         bool? result = dialog.ShowDialog();
                         if (result == true)
                         {
