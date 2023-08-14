@@ -216,6 +216,7 @@ namespace NoteBuilder
                             noteBlock.Title = newTitle;
                         }
                         noteBlock.Content = noteBlockTextBox.Text;
+                        noteBlock.Placeholder = false;
                         _dataManager.EditBlock(type, noteBlock);
                         break;
                     default:
