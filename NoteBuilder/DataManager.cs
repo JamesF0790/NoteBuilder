@@ -6,14 +6,10 @@
 using NoteBuilder.Model;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
-using System.IO.Packaging;
-using System.Linq;
-using System.Text;
-
-using System.Threading.Tasks;
 using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
 
 namespace NoteBuilder
 {

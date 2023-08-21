@@ -4,18 +4,9 @@
 // See the LICENSE.txt file in the project root for the full license text.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoteBuilder.Model
 {
-
-    public class NoteBlockCollection
-    {
-        public List<NoteBlock> NoteBlocks { get; set; } = new List<NoteBlock>();
-    }
     public class NoteBlock
     {
         public string Title { get; set; }
