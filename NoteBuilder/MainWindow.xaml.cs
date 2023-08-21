@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -102,8 +103,31 @@ namespace NoteBuilder
                 int randomIndex = random.Next(_dataManager.SignoffsList.Count);
                 signoff = _dataManager.SignoffsList[randomIndex].Content;
             }
+            string pattern = @"<[^>]+>";
+            Regex regex = new Regex(pattern);
+
+            MatchCollection matches = regex.Matches(rule);
+
+            foreach (Match match in matches)
+            {
+                string placeholder = match.Value;
+                string replacement = PromptForReplacement(placeholder);
+                rule = rule.Replace(placeholder, replacement);
+            }
             string generatedNote = $"{greeting}\n{rule}\n{citation}\n{signoff}";
             NoteTextBox.Text = generatedNote;
+        }
+        private string PromptForReplacement(string placeholder)
+        {
+            TagDialog dialog = new TagDialog(placeholder);
+            if (dialog.ShowDialog() == true)
+            {
+                return dialog.Answer;
+            }
+            else 
+            { 
+                return placeholder;
+            }
         }
         private void ComponentWindow_ResetComboBoxesRequested(object sender, EventArgs e)
         {
