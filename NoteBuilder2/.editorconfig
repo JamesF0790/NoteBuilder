@@ -1,0 +1,7 @@
+﻿# Root EditorConfig file
+root = true
+
+# Apply rules to C# files
+[*.cs]
+# Suggest matching namespace with folder structure
+dotnet_style_namespace_match_folder = true:suggestion

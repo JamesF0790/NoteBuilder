@@ -1,4 +1,6 @@
 ﻿using Avalonia;
+using Avalonia.ReactiveUI;
+using ReactiveUI;
 using System;
 
 namespace NoteBuilder2
@@ -17,6 +19,7 @@ namespace NoteBuilder2
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .WithInterFont()
+                .UseReactiveUI()
                 .LogToTrace();
     }
 }

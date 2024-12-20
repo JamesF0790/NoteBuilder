@@ -1,22 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+		<RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
+		<!-- Specify multiple runtimes -->
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.2.1" />
-    <PackageReference Include="Avalonia.Desktop" Version="11.2.1" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.1" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.1" />
-    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Include="Avalonia.Diagnostics" Version="11.2.1">
-      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
-      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
-    </PackageReference>
-  </ItemGroup>
+	<!-- Specify output paths for each runtime -->
+	<PropertyGroup Condition="'$(RuntimeIdentifier)' == 'linux-x64'">
+		<OutputPath>bin\Debug\net8.0\linux-x64\</OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+		<OutputPath>bin\Debug\net8.0\win-x64\</OutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="11.2.2" />
+		<PackageReference Include="Avalonia.Desktop" Version="11.2.2" />
+		<PackageReference Include="Avalonia.ReactiveUI" Version="11.2.2" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.2" />
+		<PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.2" />
+		<!-- Diagnostics package condition for Debug builds only -->
+		<PackageReference Include="Avalonia.Diagnostics" Version="11.2.2">
+			<IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+			<PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
 </Project>
